@@ -6,13 +6,15 @@ import Quizzes from "./components/Quizzes/quizzes.js";
 import Problem from "./components/Problem/problem.js";
 import Rewards from "./components/Rewards/rewards.js";
 import Login from "./components/Login/login.js";
+import Register from "./components/Register/Register.js";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<User />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/users" element={<User />} />
         <Route path="/article" element={<Article />} />
         <Route path="/quizzes" element={<Quizzes />} />
