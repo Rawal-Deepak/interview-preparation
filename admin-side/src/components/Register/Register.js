@@ -28,6 +28,9 @@ function Register() {
     } catch (error) {
       console.error("Error submitting Form: ", error);
     }
+    setUsername("");
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -60,7 +63,7 @@ function Register() {
                 Email:
               </label>
               <input
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 value={email}
@@ -85,20 +88,6 @@ function Register() {
                 className="block shadow-sm py-1.5 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#5652B7] focus:outline-none h-10 w-72 px-2 rounded-md"
                 required
                 onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            {/* Confirm Password */}
-            <div className="space-y-1">
-              <label htmlFor="confirm_password" className="pl-2 text">
-                Confirm Password:
-              </label>
-              <input
-                type="password"
-                name="confirm_password"
-                id="confirm-password"
-                placeholder="Enter Your Confirmation Password"
-                className="block shadow-sm py-1.5 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#5652B7] focus:outline-none h-10 w-72 px-2 rounded-md"
               />
             </div>
 
