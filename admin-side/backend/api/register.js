@@ -22,15 +22,17 @@ const registerData = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
+  isAuthenticate: { type: Boolean, default: false },
 });
 const FormData = mongoose.model("admin-side-users", registerData);
 
-app.post("/register-admin-data", async (req, res) => {
+app.post("/api/register-admin-data", async (req, res) => {
   try {
     const formData = new FormData({
       username: req.body.username,
       email: req.body.email,
       password: cryptr.encrypt(req.body.password),
+      isAuthenticate: false,
     });
     await formData.save();
     res.send("Data Save Succefully!");
