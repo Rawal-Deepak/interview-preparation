@@ -77,7 +77,7 @@ function Register() {
       };
       try {
         await fetch(
-          "https://easyhustler-admin-side.vercel.app/api/register-admin-data",
+          "https://easyhustler-admin-side-backend.vercel.app/api/register-admin-data",
           {
             method: "POST",
             headers: {

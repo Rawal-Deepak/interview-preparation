@@ -67,7 +67,7 @@ function Login() {
 
    if (isValid) {
     try {
-      const response = await axios.post('https://easyhustler-admin-side.vercel.app/api/login-admin-user', {
+      const response = await axios.post('https://easyhustler-admin-side-backend.vercel.app/api/login-admin-user', {
         email,
         password,
       });

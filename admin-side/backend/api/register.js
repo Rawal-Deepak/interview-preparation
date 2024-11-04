@@ -13,7 +13,13 @@ const cryptr = new Cryptr("mySecretKey", {
   pbkdf2Iterations: 1000,
 });
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://easyhustler-admin-side-backend.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 
 connectDB();
