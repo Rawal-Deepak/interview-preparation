@@ -67,16 +67,24 @@ function Login() {
 
    if (isValid) {
     try {
-      const response = await axios.post('http://localhost:5001/api/login-admin-user', {
+      const response = await axios.post('https://easyhustler-admin-side.vercel.app/api/login-admin-user', {
         email,
         password,
       });
-      if (response.data.decrypted === password) {
+      if (response.data.decrypted === password && response.data.isAuthenticate) {
         toast.success("Login Successfull", {
           position: "top-right",
           autoClose: true
         });
-        window.location.href = "/users";
+        setTimeout(() => {
+          window.location.href = "/users";
+        }, (2000));
+      }
+      else {
+        toast.error("You are not authorized user!", {
+          position: "top-right",
+          autoClose: true
+        });
       }
     } catch (err) {
       toast.error("User not found!", {

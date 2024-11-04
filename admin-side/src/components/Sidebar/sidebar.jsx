@@ -27,13 +27,13 @@ export default function Sidebar(props) {
         </div>
         <div className="flex flex-col mx-3">
           <ul className="text-white text-xl">
-            <Link to="/users">
+            <Link to="/admin-side-users">
               <li
                 className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
-                id="users"
+                id="admin_=side-users"
               >
                 <img src={user_logo} alt="user_logo" className="w-6 h-6" />
-                Users
+                Admin Users
               </li>
             </Link>
             <Link to="/article">
@@ -69,6 +69,15 @@ export default function Sidebar(props) {
                   className="w-6 h-6"
                 />
                 Problems
+              </li>
+            </Link>
+            <Link to="/users">
+              <li
+                className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
+                id="users"
+              >
+                <img src={user_logo} alt="user_logo" className="w-6 h-6" />
+                Users
               </li>
             </Link>
             <Link to="/rewards">

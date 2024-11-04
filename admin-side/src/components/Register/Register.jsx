@@ -76,8 +76,8 @@ function Register() {
         password: password,
       };
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/register-admin-data",
+        await fetch(
+          "https://easyhustler-admin-side.vercel.app/api/register-admin-data",
           {
             method: "POST",
             headers: {
@@ -86,9 +86,11 @@ function Register() {
             body: JSON.stringify(formData),
           }
         );
-        console.log(response);
       } catch (error) {
-        console.error("Error submitting Form: ", error);
+        toast.error("Error : " + error, {
+          position: "top-right",
+          autoClose: true
+        });
       }
       setUsername("");
       setEmail("");
@@ -98,6 +100,9 @@ function Register() {
         position: "top-right",
         autoClose: true,
       });
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, (4000));
     }
   };
 
