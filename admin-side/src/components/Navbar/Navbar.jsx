@@ -1,5 +1,4 @@
-// import dark_mode_image from "../Navbar/dark_mode.png";
-import user_account_logo from "../Navbar/account_circle.png";
+import user_account_logo from "../../assets/images/account_circle.png";
 
 export default function Navbar(props) {
   return (

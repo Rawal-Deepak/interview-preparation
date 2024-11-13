@@ -1,8 +1,8 @@
-import article_logo from "./article.png";
-import quiz_logo from "./quiz.png";
-import problem_logo from "./problem.png";
-import reward_logo from "./rewards.png";
-import user_logo from "./users.png";
+import article_logo from "../../assets/images/article.png";
+import quiz_logo from "../../assets/images/quiz.png";
+import problem_logo from "../../assets/images/problem.png";
+import reward_logo from "../../assets/images/rewards.png";
+import user_logo from "../../assets/images/users.png";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -27,13 +27,13 @@ export default function Sidebar(props) {
         </div>
         <div className="flex flex-col mx-3">
           <ul className="text-white text-xl">
-            <Link to="/admin-side-users">
+            <Link to="/authentication">
               <li
                 className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
-                id="admin_=side-users"
+                id="authentication"
               >
                 <img src={user_logo} alt="user_logo" className="w-6 h-6" />
-                Admin Users
+                Authentication
               </li>
             </Link>
             <Link to="/article">
