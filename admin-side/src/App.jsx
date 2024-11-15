@@ -11,16 +11,19 @@ import Sidebar from "./components/Sidebar/sidebar.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  let sideBarName = window.location.pathname.replace(/^\//, "");
   return (
     <Router>
       <div className="flex grid-cols-2">
-        {isAuthenticated ? <Sidebar /> : null}
+        {isAuthenticated ? <Sidebar name={sideBarName} /> : null}
         <div className={isAuthenticated ? "col-span-2 ml-[18rem]" : "w-full"}>
-          {isAuthenticated && <Navbar />}
+          {isAuthenticated && (
+            <Navbar setIsAuthenticated={setIsAuthenticated} />
+          )}
           <div
             className={
               isAuthenticated ? "px-6 py-6 w-[77.4rem] mt-12" : "w-full"
@@ -37,8 +40,9 @@ function App() {
                 <>
                   <Route path="/authentication" element={<AdminUsers />} />
                   <Route path="/users" element={<User />} />
-                  <Route path="/article" element={<Article />} />
-                  <Route path="/add-article" element={<AddArticle />} />
+                  <Route path="/article" element={<Article />}>
+                    <Children path="/add-article" element={<AddArticle />} />
+                  </Route>
                   <Route path="/quizzes" element={<Quizzes />} />
                   <Route path="/problems" element={<Problem />} />
                   <Route path="/rewards" element={<Rewards />} />

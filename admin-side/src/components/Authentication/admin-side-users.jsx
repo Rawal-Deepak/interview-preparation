@@ -8,7 +8,7 @@ export default function AdminUsers() {
   const columns = [
     {
       name: "Sr.No",
-      selector: (row, index) => index + 1,
+      selector: (row) => row.srNo,
       sortable: true,
     },
     {
@@ -71,7 +71,11 @@ export default function AdminUsers() {
           "http://localhost:5002/api/get-admin-users"
         );
         const data = await response.json();
-        setAdminUsers(data);
+        const dataWithSerialNumber = data.map((user, index) => ({
+          ...user,
+          srNo: index + 1,
+        }));
+        setAdminUsers(dataWithSerialNumber);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -143,6 +147,9 @@ export default function AdminUsers() {
         data={record}
         customStyles={customStyles}
         pagination
+        responsive
+        highlightOnHover
+        pointerOnHover
         noDataComponent={
           <p className="text-lg text-gray-500">No data available</p>
         }

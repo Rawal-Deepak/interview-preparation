@@ -3,19 +3,16 @@ import quiz_logo from "../../assets/images/quiz.png";
 import problem_logo from "../../assets/images/problem.png";
 import reward_logo from "../../assets/images/rewards.png";
 import user_logo from "../../assets/images/users.png";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-export default function Sidebar(props) {
+export default function Sidebar() {
+  const location = useLocation();
+  const [activeLink, setActiveLink] = useState("");
+
   useEffect(() => {
-    const element = document.getElementById(props.name);
-    if (element) {
-      element.classList.add("bg-gray-700");
-      element.classList.add("rounded-md");
-    } else {
-      console.warn(`Element with id "${props.name}" not found.`);
-    }
-  }, [props.name]);
+    setActiveLink(location.pathname.substring(1));
+  }, [location]);
   return (
     <>
       <div className="bg-[#202329] min-w-[18rem] h-screen top-0 left-0 fixed">
@@ -29,7 +26,11 @@ export default function Sidebar(props) {
           <ul className="text-white text-xl">
             <Link to="/authentication">
               <li
-                className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
+                className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
+                  activeLink === "authentication"
+                    ? "bg-gray-700 rounded-md"
+                    : ""
+                }`}
                 id="authentication"
               >
                 <img src={user_logo} alt="user_logo" className="w-6 h-6" />
@@ -38,7 +39,9 @@ export default function Sidebar(props) {
             </Link>
             <Link to="/article">
               <li
-                className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
+                className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
+                  activeLink === "article" ? "bg-gray-700 rounded-md" : ""
+                }`}
                 id="article"
               >
                 <img
@@ -51,7 +54,9 @@ export default function Sidebar(props) {
             </Link>
             <Link to="/quizzes">
               <li
-                className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
+                className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
+                  activeLink === "quizzes" ? "bg-gray-700 rounded-md" : ""
+                }`}
                 id="quizzes"
               >
                 <img src={quiz_logo} alt="quiz_logo" className="w-6 h-6" />
@@ -60,7 +65,9 @@ export default function Sidebar(props) {
             </Link>
             <Link to="/problems">
               <li
-                className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
+                className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
+                  activeLink === "problems" ? "bg-gray-700 rounded-md" : ""
+                }`}
                 id="problems"
               >
                 <img
@@ -73,7 +80,9 @@ export default function Sidebar(props) {
             </Link>
             <Link to="/users">
               <li
-                className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
+                className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
+                  activeLink === "users" ? "bg-gray-700 rounded-md" : ""
+                }`}
                 id="users"
               >
                 <img src={user_logo} alt="user_logo" className="w-6 h-6" />
@@ -82,7 +91,9 @@ export default function Sidebar(props) {
             </Link>
             <Link to="/rewards">
               <li
-                className="flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md"
+                className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
+                  activeLink === "rewards" ? "bg-gray-700 rounded-md" : ""
+                }`}
                 id="rewards"
               >
                 <img src={reward_logo} alt="reward_logo" className="w-6 h-6" />
