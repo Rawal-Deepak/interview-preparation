@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import authentication_logo from "../../assets/images/authenticated.svg";
 import DataTable from "react-data-table-component";
+import { autheticateAdminUserById, getAdminUsers } from "../../services/api";
 
 export default function AdminUsers() {
   const [adminUsers, setAdminUsers] = useState([]);
@@ -67,15 +68,15 @@ export default function AdminUsers() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5002/api/get-admin-users"
-        );
-        const data = await response.json();
-        const dataWithSerialNumber = data.map((user, index) => ({
-          ...user,
-          srNo: index + 1,
-        }));
-        setAdminUsers(dataWithSerialNumber);
+        const response = await getAdminUsers();
+        const data = response.data;
+        if (response?.success && response?.data) {
+          const dataWithSerialNumber = data.map((user, index) => ({
+            ...user,
+            srNo: index + 1,
+          }));
+          setAdminUsers(dataWithSerialNumber);
+        }
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -90,17 +91,8 @@ export default function AdminUsers() {
 
   const handleAuthenticate = async (userId) => {
     try {
-      const response = await fetch(
-        `http://localhost:5002/api/authenticate-user/${userId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
+      const response = await autheticateAdminUserById(userId);
+      if (response?.success) {
         const updatedUser = await response.json();
         setAdminUsers((prevUsers) =>
           prevUsers.map((user) => (user._id === userId ? updatedUser : user))

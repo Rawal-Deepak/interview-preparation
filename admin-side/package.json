@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^6.6.2",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.7.7",
@@ -17,25 +17,22 @@
     "express": "^4.21.1",
     "jquery": "^3.7.1",
     "lockdown": "^0.0.8-dev",
-    "mongoose": "^8.7.3",
+    "mongoose": "^8.8.1",
     "npm-run-all": "^4.1.5",
     "parallel": "^1.2.0",
     "react": "^18.3.1",
     "react-data-table-component": "^7.6.2",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0",
+    "react-router-dom": "^6.28.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.6",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "start": "npm-run-all --parallel api_register api_login api_admin_users admin-side",
+    "start": "npm-run-all --parallel admin-side",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api_register": "node backend/api/register.js",
-    "api_login": "node backend/api/login.js",
-    "api_admin_users": "node backend/api/admin-user.js",
     "admin-side": "react-scripts start"
   },
   "eslintConfig": {
@@ -60,6 +57,6 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.14"
+    "tailwindcss": "^3.4.15"
   }
 }

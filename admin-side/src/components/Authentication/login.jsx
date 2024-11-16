@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import error_logo from "../../assets/images/error.svg";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import { loginAdminUser } from "../../services/api";
 
 function Login({ setIsAuthenticated }) {
   const [loginData, setLoginData] = useState({
@@ -68,42 +68,21 @@ function Login({ setIsAuthenticated }) {
 
     if (isValid) {
       try {
-        const response = await axios.post(
-          "http://localhost:5001/api/login-admin-user",
-          {
-            email,
-            password,
-          }
-        );
-
-        if (response.status === 200) {
-          if (response.data.decrypted === password) {
-            toast.success("Login Successfull!", {
-              position: "top-right",
-              autoClose: true,
-            });
-            setLoginData({ email: "", password: "" });
-            setTimeout(() => {
-              setIsAuthenticated(true);
-              navigate("/authentication");
-            }, 3000);
-          } else if (response.status === 404) {
-            toast.error(
-              "User not found. Please check your email and try again.",
-              {
-                position: "top-right",
-                autoClose: true,
-              }
-            );
-          } else if (response.status === 401) {
-            toast.error("Invalid password. Please try again.", {
-              position: "top-right",
-              autoClose: true,
-            });
-          }
+        const response = await loginAdminUser(loginData);
+        console.log(response);
+        if (response.success) {
+          toast.success("Login Successfull!", {
+            position: "top-right",
+            autoClose: true,
+          });
+          setLoginData({ email: "", password: "" });
+          setTimeout(() => {
+            setIsAuthenticated(true);
+            navigate("/authentication");
+          }, 3000);
         }
       } catch (error) {
-        toast.error("Error: " + error.message, {
+        toast.error("ERROR :: " + error.message, {
           position: "top-right",
           autoClose: true,
         });

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { registerAdminStaff } from "../../services/api";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -69,30 +70,15 @@ function Register() {
 
     if (isValid) {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/register-admin-data",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-          }
-        );
-
-        if (response.ok) {
-          toast.success("Wait for Authentication from Administration!", {
-            position: "top-right",
-            autoClose: true,
-          });
-          setFormData({ username: "", email: "", password: "" });
-          setTimeout(() => navigate("/login"), 4000);
-        } else {
-          toast.error("Registration Failed. Please try again.", {
-            position: "top-right",
-            autoClose: true,
-          });
-        }
+        await registerAdminStaff(formData);
+        toast.success("Wait for Authentication from Administration!", {
+          position: "top-right",
+          autoClose: true,
+        });
+        setFormData({ username: "", email: "", password: "" });
+        setTimeout(() => navigate("/login"), 4000);
       } catch (error) {
-        toast.error("Error: " + error.message, {
+        toast.error("ERROR :: " + error.message, {
           position: "top-right",
           autoClose: true,
         });

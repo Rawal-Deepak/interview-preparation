@@ -1,16 +1,23 @@
-import axios from "axios";
+const headers = { "Content-Type": "application/json" };
 
-const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-export const registerAdminStaff = async (adminData) => {
+export const registerAdminStaff = async (formData) => {
   try {
-    const response = await API.post("/register-admin-data", adminData);
-    return response.data;
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/register-admin-data`,
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(formData),
+      }
+    );
+    if (response.ok) {
+      const data = response.json();
+      return data;
+    } else if (response.status === 409) {
+      throw new Error("Email is already in use!");
+    } else if (response.status === 400) {
+      throw new Error("All Fields are required!");
+    }
   } catch (error) {
     console.error("ERROR :: adding or registering admin: ", error);
     throw error;
@@ -19,8 +26,21 @@ export const registerAdminStaff = async (adminData) => {
 
 export const loginAdminUser = async (loginData) => {
   try {
-    const response = await API.post("/login-admin-user", loginData);
-    return response.data;
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/login-admin-user`,
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(loginData),
+      }
+    );
+    if (response.status === 404) {
+      throw new Error("User Not Found");
+    } else if (response.status === 401) {
+      throw new Error("Invalid Credentials. Please try again...!");
+    }
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("ERROR :: login admin: ", error);
     throw error;
@@ -29,8 +49,10 @@ export const loginAdminUser = async (loginData) => {
 
 export const getAdminUsers = async () => {
   try {
-    const response = await API.get("/get-admin-users");
-    return response.data;
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/get-admin-users`
+    );
+    return response.json();
   } catch (error) {
     console.error("ERROR :: getting Admin users: ", error);
     throw error;
@@ -39,8 +61,10 @@ export const getAdminUsers = async () => {
 
 export const autheticateAdminUserById = async (id) => {
   try {
-    const response = await API.put(`/authenticate-user/${id}`);
-    return response.data;
+    await fetch(`${process.env.REACT_APP_API_URL}/authenticate-user/${id}`, {
+      method: "PUT",
+      headers: headers,
+    });
   } catch (error) {
     console.error("ERROR :: getting admin by ID: ", error);
     throw error;

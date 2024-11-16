@@ -11,7 +11,7 @@ import Sidebar from "./components/Sidebar/sidebar.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import React, { Children, useState } from "react";
+import React, { useState } from "react";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,9 +40,8 @@ function App() {
                 <>
                   <Route path="/authentication" element={<AdminUsers />} />
                   <Route path="/users" element={<User />} />
-                  <Route path="/article" element={<Article />}>
-                    <Children path="/add-article" element={<AddArticle />} />
-                  </Route>
+                  <Route path="/article" element={<Article />} />
+                  <Route path="/add-article" element={<AddArticle />} />
                   <Route path="/quizzes" element={<Quizzes />} />
                   <Route path="/problems" element={<Problem />} />
                   <Route path="/rewards" element={<Rewards />} />
