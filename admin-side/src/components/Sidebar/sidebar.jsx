@@ -37,19 +37,19 @@ export default function Sidebar() {
                 Authentication
               </li>
             </Link>
-            <Link to="/article">
+            <Link to="/learning">
               <li
                 className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
-                  activeLink === "article" ? "bg-gray-700 rounded-md" : ""
+                  activeLink === "learning" ? "bg-gray-700 rounded-md" : ""
                 }`}
-                id="article"
+                id="learning"
               >
                 <img
                   src={article_logo}
                   alt="article_logo"
                   className="w-6 h-6"
                 />
-                Article Content
+                Learning Material
               </li>
             </Link>
             <Link to="/quizzes">

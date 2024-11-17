@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 import {
-  ClassicEditor,
+  DecoupledEditor,
   AccessibilityHelp,
   Alignment,
   Autoformat,
@@ -12,15 +12,14 @@ import {
   BalloonToolbar,
   BlockQuote,
   Bold,
-  CloudServices,
   Code,
+  CodeBlock,
   Essentials,
   FindAndReplace,
   FontBackgroundColor,
   FontColor,
   FontFamily,
   FontSize,
-  FullPage,
   GeneralHtmlSupport,
   Heading,
   Highlight,
@@ -30,6 +29,7 @@ import {
   ImageBlock,
   ImageCaption,
   ImageInline,
+  ImageInsert,
   ImageInsertViaUrl,
   ImageResize,
   ImageStyle,
@@ -53,7 +53,7 @@ import {
   RemoveFormat,
   SelectAll,
   ShowBlocks,
-  SourceEditing,
+  SimpleUploadAdapter,
   SpecialCharacters,
   SpecialCharactersArrows,
   SpecialCharactersCurrency,
@@ -79,10 +79,12 @@ import {
 
 import "ckeditor5/ckeditor5.css";
 
-import "./App.css";
+import "./ckeditor.css";
 
 export default function App() {
   const editorContainerRef = useRef(null);
+  const editorMenuBarRef = useRef(null);
+  const editorToolbarRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
 
@@ -98,7 +100,6 @@ export default function App() {
         "undo",
         "redo",
         "|",
-        "sourceEditing",
         "showBlocks",
         "|",
         "heading",
@@ -114,9 +115,11 @@ export default function App() {
         "underline",
         "|",
         "link",
+        "insertImage",
         "insertTable",
         "highlight",
         "blockQuote",
+        "codeBlock",
         "|",
         "alignment",
         "|",
@@ -138,15 +141,14 @@ export default function App() {
       BalloonToolbar,
       BlockQuote,
       Bold,
-      CloudServices,
       Code,
+      CodeBlock,
       Essentials,
       FindAndReplace,
       FontBackgroundColor,
       FontColor,
       FontFamily,
       FontSize,
-      FullPage,
       GeneralHtmlSupport,
       Heading,
       Highlight,
@@ -156,6 +158,7 @@ export default function App() {
       ImageBlock,
       ImageCaption,
       ImageInline,
+      ImageInsert,
       ImageInsertViaUrl,
       ImageResize,
       ImageStyle,
@@ -179,7 +182,7 @@ export default function App() {
       RemoveFormat,
       SelectAll,
       ShowBlocks,
-      SourceEditing,
+      SimpleUploadAdapter,
       SpecialCharacters,
       SpecialCharactersArrows,
       SpecialCharactersCurrency,
@@ -207,6 +210,7 @@ export default function App() {
       "italic",
       "|",
       "link",
+      "insertImage",
       "|",
       "bulletedList",
       "numberedList",
@@ -215,7 +219,7 @@ export default function App() {
       supportAllValues: true,
     },
     fontSize: {
-      options: [10, 12, 14, "default", 18, 20, 22],
+      options: [10, 12, 14, "default", 18, 20, 22, 24, 28],
       supportAllValues: true,
     },
     heading: {
@@ -285,8 +289,7 @@ export default function App() {
         "resizeImage",
       ],
     },
-    initialData:
-      '<h2>Congratulations on setting up CKEditor 5! 🎉</h2>\n<p>\n    You\'ve successfully created a CKEditor 5 project. This powerful text editor will enhance your application, enabling rich text editing\n    capabilities that are customizable and easy to use.\n</p>\n<h3>What\'s next?</h3>\n<ol>\n    <li>\n        <strong>Integrate into your app</strong>: time to bring the editing into your application. Take the code you created and add to your\n        application.\n    </li>\n    <li>\n        <strong>Explore features:</strong> Experiment with different plugins and toolbar options to discover what works best for your needs.\n    </li>\n    <li>\n        <strong>Customize your editor:</strong> Tailor the editor\'s configuration to match your application\'s style and requirements. Or even\n        write your plugin!\n    </li>\n</ol>\n<p>\n    Keep experimenting, and don\'t hesitate to push the boundaries of what you can achieve with CKEditor 5. Your feedback is invaluable to us\n    as we strive to improve and evolve. Happy editing!\n</p>\n<h3>Helpful resources</h3>\n<ul>\n    <li>📝 <a href="https://orders.ckeditor.com/trial/premium-features">Trial sign up</a>,</li>\n    <li>📕 <a href="https://ckeditor.com/docs/ckeditor5/latest/installation/index.html">Documentation</a>,</li>\n    <li>⭐️ <a href="https://github.com/ckeditor/ckeditor5">GitHub</a> (star us if you can!),</li>\n    <li>🏠 <a href="https://ckeditor.com">CKEditor Homepage</a>,</li>\n    <li>🧑‍💻 <a href="https://ckeditor.com/ckeditor-5/demo/">CKEditor 5 Demos</a>,</li>\n</ul>\n<h3>Need help?</h3>\n<p>\n    See this text, but the editor is not starting up? Check the browser\'s console for clues and guidance. It may be related to an incorrect\n    license key if you use premium features or another feature-related requirement. If you cannot make it work, file a GitHub issue, and we\n    will help as soon as possible!\n</p>\n',
+    initialData: "",
     link: {
       addTargetToExternalLinks: true,
       defaultProtocol: "https://",
@@ -385,14 +388,43 @@ export default function App() {
     <div>
       <div className="main-container">
         <div
-          className="editor-container editor-container_classic-editor editor-container_include-style"
+          className="editor-container editor-container_document-editor editor-container_include-style"
           ref={editorContainerRef}
         >
-          <div className="editor-container__editor">
-            <div ref={editorRef}>
-              {isLayoutReady && (
-                <CKEditor editor={ClassicEditor} config={editorConfig} />
-              )}
+          <div
+            className="editor-container__menu-bar"
+            ref={editorMenuBarRef}
+          ></div>
+          <div
+            className="editor-container__toolbar"
+            ref={editorToolbarRef}
+          ></div>
+          <div className="editor-container__editor-wrapper">
+            <div className="editor-container__editor">
+              <div ref={editorRef}>
+                {isLayoutReady && (
+                  <CKEditor
+                    onReady={(editor) => {
+                      editorToolbarRef.current.appendChild(
+                        editor.ui.view.toolbar.element
+                      );
+                      editorMenuBarRef.current.appendChild(
+                        editor.ui.view.menuBarView.element
+                      );
+                    }}
+                    onAfterDestroy={() => {
+                      Array.from(editorToolbarRef.current.children).forEach(
+                        (child) => child.remove()
+                      );
+                      Array.from(editorMenuBarRef.current.children).forEach(
+                        (child) => child.remove()
+                      );
+                    }}
+                    editor={DecoupledEditor}
+                    config={editorConfig}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

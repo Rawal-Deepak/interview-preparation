@@ -1,12 +1,12 @@
 import User from "./components/Users/user.jsx";
-import Article from "./components/Article/article.jsx";
+import LearningContent from "./components/LearningContent/learningContent.jsx";
 import Quizzes from "./components/Quizzes/quizzes.jsx";
 import Problem from "./components/Problem/problem.jsx";
 import Rewards from "./components/Rewards/rewards.jsx";
 import Login from "./components/Authentication/login.jsx";
 import Register from "./components/Authentication/Register.jsx";
 import AdminUsers from "./components/Authentication/admin-side-users.jsx";
-import AddArticle from "./components/Article/add_article.jsx";
+import ModifyLearningContent from "./components/LearningContent/modifyContent.jsx";
 import Sidebar from "./components/Sidebar/sidebar.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -40,8 +40,11 @@ function App() {
                 <>
                   <Route path="/authentication" element={<AdminUsers />} />
                   <Route path="/users" element={<User />} />
-                  <Route path="/article" element={<Article />}>
-                    <Route path="modify-article" element={<AddArticle />} />
+                  <Route path="/learning" element={<LearningContent />}>
+                    <Route
+                      path="modify-content"
+                      element={<ModifyLearningContent />}
+                    />
                   </Route>
                   <Route path="/quizzes" element={<Quizzes />} />
                   <Route path="/problems" element={<Problem />} />

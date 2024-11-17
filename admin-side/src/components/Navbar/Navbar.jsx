@@ -6,7 +6,7 @@ export default function Navbar({ setIsAuthenticated }) {
   const location = useLocation();
   const [headerName, setHeaderName] = useState("");
   useEffect(() => {
-    setHeaderName(location.pathname.split("/")[1]);
+    setHeaderName(location.pathname.split(/[/-]/)[1]);
   }, [location]);
   const handleLogout = () => {
     setIsAuthenticated(false);
