@@ -17,7 +17,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   let sideBarName = window.location.pathname.replace(/^\//, "");
   return (
-    <Router>
+    <Router future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
       <div className="flex grid-cols-2">
         {isAuthenticated ? <Sidebar name={sideBarName} /> : null}
         <div className={isAuthenticated ? "col-span-2 ml-[18rem]" : "w-full"}>
@@ -40,8 +40,9 @@ function App() {
                 <>
                   <Route path="/authentication" element={<AdminUsers />} />
                   <Route path="/users" element={<User />} />
-                  <Route path="/article" element={<Article />} />
-                  <Route path="/add-article" element={<AddArticle />} />
+                  <Route path="/article" element={<Article />}>
+                    <Route path="modify-article" element={<AddArticle />} />
+                  </Route>
                   <Route path="/quizzes" element={<Quizzes />} />
                   <Route path="/problems" element={<Problem />} />
                   <Route path="/rewards" element={<Rewards />} />

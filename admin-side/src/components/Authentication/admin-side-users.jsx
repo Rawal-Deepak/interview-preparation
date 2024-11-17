@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import authentication_logo from "../../assets/images/authenticated.svg";
 import DataTable from "react-data-table-component";
 import { autheticateAdminUserById, getAdminUsers } from "../../services/api";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function AdminUsers() {
   const [adminUsers, setAdminUsers] = useState([]);
@@ -36,7 +37,7 @@ export default function AdminUsers() {
           </p>
         ) : (
           <button
-            className="w-32 h-8 bg-blue-500 rounded-md text-white hover:bg-blue-400"
+            className="w-32 h-8 bg-[#5652B7] rounded-md text-white hover:bg-[#6461BD] shadow-md"
             onClick={() => handleAuthenticate(row._id)}
           >
             Authenticate
@@ -92,16 +93,23 @@ export default function AdminUsers() {
   const handleAuthenticate = async (userId) => {
     try {
       const response = await autheticateAdminUserById(userId);
-      if (response?.success) {
-        const updatedUser = await response.json();
+      if (response.success) {
+        toast.success("User Authenticated!", {
+          position: "top-right",
+          autoClose: true,
+        });
         setAdminUsers((prevUsers) =>
-          prevUsers.map((user) => (user._id === userId ? updatedUser : user))
+          prevUsers.map((user) =>
+            user._id === userId ? { ...response.data, srNo: user.srNo } : user
+          )
         );
-      } else {
-        console.error("Failed to authenticate user");
       }
     } catch (error) {
-      console.error("Error authenticating user: ", error);
+      toast.error("Failed to authenticate user", {
+        position: "top-right",
+        autoClose: true,
+      });
+      console.error("Authentication Error: ", error);
     }
   };
 
@@ -120,6 +128,7 @@ export default function AdminUsers() {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex flex-row justify-between items-center my-2">
         <p className="text-xl font-medium ml-4">Admin Users</p>
         <p>

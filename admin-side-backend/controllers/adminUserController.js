@@ -34,6 +34,7 @@ const authenticateAdminUserById = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Admin user authenticated",
+      data: updatedUser,
     });
   } catch (err) {
     res.status(500).json({

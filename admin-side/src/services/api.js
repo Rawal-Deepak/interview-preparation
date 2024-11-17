@@ -32,6 +32,7 @@ export const loginAdminUser = async (loginData) => {
         method: "POST",
         headers: headers,
         body: JSON.stringify(loginData),
+        credentials: "include",
       }
     );
     if (response.status === 404) {
@@ -52,7 +53,10 @@ export const getAdminUsers = async () => {
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/get-admin-users`
     );
-    return response.json();
+    if (!response.ok) {
+      throw new Error(`Failed to fetch admin users: ${response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
     console.error("ERROR :: getting Admin users: ", error);
     throw error;
@@ -61,10 +65,17 @@ export const getAdminUsers = async () => {
 
 export const autheticateAdminUserById = async (id) => {
   try {
-    await fetch(`${process.env.REACT_APP_API_URL}/authenticate-user/${id}`, {
-      method: "PUT",
-      headers: headers,
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/authenticate-user/${id}`,
+      {
+        method: "PUT",
+        headers: headers,
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to authenticate user");
+    }
+    return await response.json();
   } catch (error) {
     console.error("ERROR :: getting admin by ID: ", error);
     throw error;

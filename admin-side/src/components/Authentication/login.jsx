@@ -41,7 +41,7 @@ function Login({ setIsAuthenticated }) {
   };
 
   const validateField = (value, name, type = "text") => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const isValid = value && (type !== "email" || emailRegex.test(value));
 
     if (!isValid) {
@@ -69,7 +69,6 @@ function Login({ setIsAuthenticated }) {
     if (isValid) {
       try {
         const response = await loginAdminUser(loginData);
-        console.log(response);
         if (response.success) {
           toast.success("Login Successfull!", {
             position: "top-right",
@@ -95,9 +94,12 @@ function Login({ setIsAuthenticated }) {
       <div className="Login flex justify-center items-center w-screen h-screen bg-gray-100">
         <ToastContainer />
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center px-14 gap-y-4 py-6 bg-white rounded-md shadow-md text-gray-700">
-            <h1 className="text-2xl">Login</h1>
-            <div className="space-y-1">
+          <div className="flex flex-col items-center gap-y-4 px-14 py-6 bg-white rounded-md shadow-md text-gray-700">
+            <div className="flex justify-center flex-col items-center">
+              <h1 className="text-2xl font-bold">Welcome Back</h1>
+              <h2>Sign in to admin account of EasyHustler</h2>
+            </div>
+            <div className="space-y-1 mt-2">
               <label htmlFor="username" className="pl-2 text">
                 Email:
               </label>

@@ -11,7 +11,7 @@ export default function Sidebar() {
   const [activeLink, setActiveLink] = useState("");
 
   useEffect(() => {
-    setActiveLink(location.pathname.substring(1));
+    setActiveLink(location.pathname.split("/")[1]);
   }, [location]);
   return (
     <>
