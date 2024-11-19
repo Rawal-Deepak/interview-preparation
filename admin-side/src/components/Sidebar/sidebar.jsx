@@ -1,5 +1,5 @@
 import article_logo from "../../assets/images/article.png";
-import quiz_logo from "../../assets/images/quiz.png";
+import assignement_logo from "../../assets/images/assignment_add.svg";
 import problem_logo from "../../assets/images/problem.png";
 import reward_logo from "../../assets/images/rewards.png";
 import user_logo from "../../assets/images/users.png";
@@ -52,30 +52,36 @@ export default function Sidebar() {
                 Learning Material
               </li>
             </Link>
-            <Link to="/quizzes">
+            <Link to="/assignments">
               <li
                 className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
-                  activeLink === "quizzes" ? "bg-gray-700 rounded-md" : ""
+                  activeLink === "assignments" ? "bg-gray-700 rounded-md" : ""
                 }`}
-                id="quizzes"
+                id="assignments"
               >
-                <img src={quiz_logo} alt="quiz_logo" className="w-6 h-6" />
-                Quizzes
+                <img
+                  src={assignement_logo}
+                  alt="assignment_logo"
+                  className="w-6 h-6"
+                />
+                Assignments
               </li>
             </Link>
-            <Link to="/problems">
+            <Link to="/coding-questions">
               <li
                 className={`flex gap-x-4 items-center hover:bg-gray-700 px-4 py-2 my-2 cursor-pointer hover:rounded-md ${
-                  activeLink === "problems" ? "bg-gray-700 rounded-md" : ""
+                  activeLink === "coding-questions"
+                    ? "bg-gray-700 rounded-md"
+                    : ""
                 }`}
-                id="problems"
+                id="coding-questions"
               >
                 <img
                   src={problem_logo}
                   alt="problem_logo"
                   className="w-6 h-6"
                 />
-                Problems
+                Coding Questions
               </li>
             </Link>
             <Link to="/users">

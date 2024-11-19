@@ -1,5 +1,6 @@
 const registerModel = require("../models/registerModel");
 const Cryptr = require("cryptr");
+const { generateToken } = require("../services/auth");
 
 const cryptr = new Cryptr("mySecretKey", {
   encoding: "base64",
@@ -20,15 +21,23 @@ const registerController = async (req, res) => {
       return res.status(409).json({ error: "Email is already in use" });
     }
 
-    const formData = new registerModel({
+    const newUser = await registerModel.create({
       username: username,
       email: email,
       password: cryptr.encrypt(password),
-      isAuthenticate: false,
     });
-    await formData.save();
-
-    res.status(201).json({ message: "Admin registered successfully" });
+    const token = generateToken({
+      id: newUser._id,
+      username: newUser.username,
+    });
+    res
+      .cookie("uid", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      })
+      .status(201)
+      .json({ message: "Admin registered successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

@@ -1,11 +1,12 @@
 import Ckeditor from "../Ckeditor/ckeditor";
 import TextFieldWithDropdown from "../Essentials/TextFieldWithDropdown";
 
-function addArticle() {
+function ModifyContent() {
   return (
     <>
+      <h2 className="mt-4 text-lg font-medium">Add & Edit Learning Content:</h2>
       {/* Category and sub-category for Learning Content */}
-      <div className="mt-5 flex gap-x-14">
+      <div className="mt-4 flex gap-x-14">
         <div className="flex justify-start items-start flex-col gap-y-1">
           <label htmlFor="Category" className="pl-1 text-base">
             Category:
@@ -52,4 +53,4 @@ function addArticle() {
   );
 }
 
-export default addArticle;
+export default ModifyContent;

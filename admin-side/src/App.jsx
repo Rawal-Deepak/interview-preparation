@@ -1,12 +1,14 @@
 import User from "./components/Users/user.jsx";
 import LearningContent from "./components/LearningContent/learningContent.jsx";
-import Quizzes from "./components/Quizzes/quizzes.jsx";
-import Problem from "./components/Problem/problem.jsx";
+import ModifyLearningContent from "./components/LearningContent/modifyContent.jsx";
+import Assignments from "./components/Assignments/assignments.jsx";
+import ModifyAssignments from "./components/Assignments/modifyAssignment.jsx";
+import CodingQuestion from "./components/CodingQuestions/codingQuestion.jsx";
+import ModifyCodingQuestion from "./components/CodingQuestions/modifyCodingQuestions.jsx";
 import Rewards from "./components/Rewards/rewards.jsx";
 import Login from "./components/Authentication/login.jsx";
 import Register from "./components/Authentication/Register.jsx";
 import AdminUsers from "./components/Authentication/admin-side-users.jsx";
-import ModifyLearningContent from "./components/LearningContent/modifyContent.jsx";
 import Sidebar from "./components/Sidebar/sidebar.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -46,8 +48,18 @@ function App() {
                       element={<ModifyLearningContent />}
                     />
                   </Route>
-                  <Route path="/quizzes" element={<Quizzes />} />
-                  <Route path="/problems" element={<Problem />} />
+                  <Route path="/assignments" element={<Assignments />}>
+                    <Route
+                      path="modify-assignments"
+                      element={<ModifyAssignments />}
+                    />
+                  </Route>
+                  <Route path="/coding-questions" element={<CodingQuestion />}>
+                    <Route
+                      path="modify-coding-question"
+                      element={<ModifyCodingQuestion />}
+                    />
+                  </Route>
                   <Route path="/rewards" element={<Rewards />} />
                 </>
               ) : (

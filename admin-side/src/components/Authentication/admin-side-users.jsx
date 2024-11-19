@@ -70,7 +70,7 @@ export default function AdminUsers() {
     const fetchData = async () => {
       try {
         const response = await getAdminUsers();
-        const data = response.data;
+        const data = await response.data;
         if (response?.success && response?.data) {
           const dataWithSerialNumber = data.map((user, index) => ({
             ...user,

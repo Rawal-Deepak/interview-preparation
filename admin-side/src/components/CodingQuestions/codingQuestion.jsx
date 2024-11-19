@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import DataTable from "react-data-table-component";
 
-export default function LearningContent() {
+export default function Assignments() {
   const location = useLocation();
   const columns = [
     {
@@ -11,28 +11,18 @@ export default function LearningContent() {
       sortable: true,
     },
     {
-      name: "Category",
-      selector: (row) => row.category,
-      sortable: true,
-    },
-    {
-      name: "Sub-Category",
-      selector: (row) => row.subCategory,
-      sortable: true,
-    },
-    {
-      name: "Section",
-      selector: (row) => row.section,
-      sortable: true,
-    },
-    {
-      name: "Sub-Section",
-      selector: (row) => row.subSection,
+      name: "Title",
+      selector: (row) => row.title,
       sortable: true,
     },
     {
       name: "Description",
       selector: (row) => row.description,
+      sortable: true,
+    },
+    {
+      name: "Topics",
+      selector: (row) => row.topics,
       sortable: true,
     },
     {
@@ -45,11 +35,9 @@ export default function LearningContent() {
   const data = [
     {
       srNo: 1,
-      category: "Frameworks & Libraries",
-      subCategory: "React",
-      section: "Hooks",
-      subSection: "useState",
-      description: "Maintain State of page",
+      title: "What is a React Hook?",
+      description: "react_basics",
+      topics: "Easy",
       action: "Edit Delete",
     },
   ];
@@ -75,11 +63,11 @@ export default function LearningContent() {
 
   return (
     <>
-      {location.pathname === "/learning" && (
+      {location.pathname === "/coding-questions" && (
         <div>
           <div className="flex justify-between items-center mt-3">
             <div className="font-medium text-xl">
-              <p>Learning Content Material</p>
+              <p>Coding Questions For Practice</p>
             </div>
             <div className="flex items-center gap-x-6">
               <div>
@@ -93,9 +81,9 @@ export default function LearningContent() {
                   // onChange={handleFilter}
                 />
               </div>
-              <Link to="modify-content">
-                <button className="w-32 h-10  bg-[#5652B7] rounded-md text-white hover:bg-[#6461BD] shadow-md">
-                  Add Content
+              <Link to="modify-coding-question">
+                <button className="w-40 h-10 bg-[#5652B7] rounded-md text-white hover:bg-[#6461BD] shadow-md">
+                  Add Question
                 </button>
               </Link>
             </div>
